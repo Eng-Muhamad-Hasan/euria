@@ -5,7 +5,7 @@ import { Ionicons } from "@react-native-vector-icons/ionicons";
 
 export default function AppleAuthButton() {
   return (
-    <TouchableOpacity style={styles.appleButton}>
+    <TouchableOpacity activeOpacity={.8} style={styles.appleButton}>
       <Ionicons name="logo-apple" size={18} color="white" />
       <Text style={styles.appleButtonText}>SignIn With Apple</Text>
     </TouchableOpacity>

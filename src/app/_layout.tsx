@@ -10,6 +10,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { Slot } from "expo-router";
 import { useFonts } from "expo-font";
+import { StatusBar } from "react-native";
 
 const queryClient = new QueryClient();
 export default function RootLayout() {
@@ -23,10 +24,13 @@ export default function RootLayout() {
 
   if (!fontsLoaded) return null;
   return (
+    <>
+    <StatusBar barStyle={"light-content"}/>
     <GestureHandlerRootView style={{ flex: 1 }}>
       <QueryClientProvider client={queryClient}>
-        <Slot />;
+        <Slot />
       </QueryClientProvider>
     </GestureHandlerRootView>
+    </>
   );
 }

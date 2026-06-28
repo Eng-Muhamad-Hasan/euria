@@ -10,52 +10,72 @@ import Animated, { FadeInDown } from "react-native-reanimated";
 
 import AppleAuthButton from "@/components/auth/AppleAuthButton";
 import GoogleAuthButton from "@/components/auth/GoogleAuthButton";
+import InfiniteScrollSlide from "@/components/auth/InfiniteScrollSlide";
 import { Image } from "expo-image";
-
+import { LinearGradient } from "expo-linear-gradient";
+import { SafeAreaView } from "react-native-safe-area-context";
 function openWebPage() {
   Linking.openURL("#");
 }
 
 export default function Index() {
   return (
-    <View style={styles.container}>
-      <View style={styles.infinitScrollContainer}></View>
-      <View style={styles.contentContainer}>
-        <Image
-          source={require("@/assets/images/wolt-logo.png")}
-          style={styles.brandLogo}
-        />
-        <Animated.Text entering={FadeInDown} style={styles.title}>
-          Best Choice Forever
-        </Animated.Text>
+    <SafeAreaView style={{ flex: 1 }}>
+      <View style={styles.container}>
+        <View style={styles.infinitScrollContainer}>
+          <View>
+            <InfiniteScrollSlide scrollDirection="down" iconSet="set1" />
+          </View>
+          <View>
+            <InfiniteScrollSlide scrollDirection="up" iconSet="set2" />
+          </View>
+          <View>
+            <InfiniteScrollSlide scrollDirection="down" iconSet="set3" />
+          </View>
+          <LinearGradient
+            colors={["transparent", "#fff"]}
+            style={styles.gradientStyle}
+          />
+        </View>
+        <View style={styles.contentContainer}>
+          <Image
+            contentFit="contain"
+            contentPosition={"center"}
+            source={require("@/assets/images/wolt-logo.png")}
+            style={styles.brandLogo}
+          />
+          <Animated.Text entering={FadeInDown} style={styles.title}>
+            Your Best Choice Forever
+          </Animated.Text>
 
-        <View style={styles.buttonContainer}>
-          <Animated.View entering={FadeInDown.delay(100)}>
-            <AppleAuthButton />
-          </Animated.View>
-          <Animated.View entering={FadeInDown.delay(200)}>
-            <GoogleAuthButton />
-          </Animated.View>
-          <Animated.View entering={FadeInDown.delay(300)}>
-            <TouchableOpacity style={styles.textButton}>
-              <Text>Other Button</Text>
-            </TouchableOpacity>
+          <View style={styles.buttonContainer}>
+            <Animated.View entering={FadeInDown.delay(100)}>
+              <AppleAuthButton />
+            </Animated.View>
+            <Animated.View entering={FadeInDown.delay(200)}>
+              <GoogleAuthButton />
+            </Animated.View>
+            <Animated.View entering={FadeInDown.delay(300)}>
+              <TouchableOpacity activeOpacity={0.8} style={styles.textButton}>
+                <Text style={styles.textButtonContent}>Other Options</Text>
+              </TouchableOpacity>
+            </Animated.View>
+          </View>
+          <Animated.View
+            style={styles.privacyContainer}
+            entering={FadeInDown.delay(400)}
+          >
+            <Text style={styles.privacyText}>Please Visit</Text>
+            <Text style={styles.privacyLink} onPress={openWebPage}>
+              Euria Privacy Statement
+            </Text>
+            <Text style={styles.privacyText}>
+              to learn about your personal data processing at Euria.
+            </Text>
           </Animated.View>
         </View>
-        <Animated.View
-          style={styles.privacyContainer}
-          entering={FadeInDown.delay(400)}
-        >
-          <Text style={styles.privacyText}>Please Visit</Text>{" "}
-          <Text style={styles.privacyLink} onPress={openWebPage}>
-            Euria Privacy Statement
-          </Text>{" "}
-          <Text style={styles.privacyText}>
-            to learn about your personal data processing at Euria.
-          </Text>{" "}
-        </Animated.View>
       </View>
-    </View>
+    </SafeAreaView>
   );
 }
 
@@ -63,8 +83,21 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
   },
+  gradientStyle: {
+    height: 200,
+    position: "absolute",
+    left: 0,
+    bottom: 0,
+    right: 0,
+  },
   infinitScrollContainer: {
     flex: 0.8,
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
+    gap: 5,
+    position: "relative",
+    overflow: "hidden",
   },
   contentContainer: {
     flex: 1,
@@ -75,7 +108,7 @@ const styles = StyleSheet.create({
   brandLogo: {
     height: 48,
     width: "100%",
-    resizeMode: "contain",
+    // contentFit: "contain",
     marginBottom: 20,
   },
   title: {
@@ -105,8 +138,13 @@ const styles = StyleSheet.create({
   },
 
   privacyContainer: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
     marginTop: 30,
+    flexWrap: "wrap",
     paddingHorizontal: 20,
+    gap: 2,
   },
   privacyText: {
     fontSize: 12,
@@ -116,6 +154,8 @@ const styles = StyleSheet.create({
     lineHeight: 18,
   },
   privacyLink: {
+    fontSize: 12,
+
     color: Colors.accentBlue,
     textDecorationLine: "underline",
   },
