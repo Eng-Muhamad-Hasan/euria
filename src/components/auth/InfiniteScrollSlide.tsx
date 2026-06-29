@@ -1,16 +1,16 @@
+import { useEffect } from "react";
 import { StyleSheet, Text, View } from "react-native";
 import Animated, {
-  scrollTo,
-  useAnimatedReaction,
-  useAnimatedRef,
+  Easing,
+  useAnimatedStyle,
   useSharedValue,
+  withRepeat,
+  withTiming,
 } from "react-native-reanimated";
 
-import { useEffect } from "react";
-
 const ITEM_HEIGHT = 160;
-const SCROLL_SPEED = 20; //pixels per second
-const FRAME_RATE = 60; // frames per second
+// const GAP = 10;
+const SCROLL_SPEED = 20; // pixels per second
 const iconDataSets = {
   set1: [
     { Icon: "🍕", color: "#B2D5E5" },
@@ -44,73 +44,55 @@ export default function InfiniteScrollSlide({
   scrollDirection = "down",
   iconSet = "set1",
 }: InfiniteScrollType) {
-  const scrollRef = useAnimatedRef<Animated.ScrollView>();
-  const scrollY = useSharedValue(0);
+  const progress = useSharedValue(0);
   const iconData = iconDataSets[iconSet];
-  const doubleItems = [...iconData, ...iconData];
-  const totalSlideHeight = iconData.length * ITEM_HEIGHT;
+  const items = [...iconData, ...iconData];
+  const totalSlideHeight = iconData.length * (ITEM_HEIGHT ) - ITEM_HEIGHT;
+  const duration = (totalSlideHeight / SCROLL_SPEED) * 1000;
 
   useEffect(() => {
-    if (scrollDirection === "up") {
-      scrollY.value = totalSlideHeight;
-    } else {
-      scrollY.value = 0;
-    }
+    progress.value = withRepeat(
+      withTiming(totalSlideHeight, {
+        duration,
+        easing: Easing.linear,
+      }),
+      -1,
+      true,
+    );
+  }, [duration, scrollDirection]);
 
-    const interval = setInterval(() => {
-      const increment =
-        (SCROLL_SPEED / FRAME_RATE) * (scrollDirection === "up" ? -1 : 1);
-      scrollY.value += increment;
-    }, 1000 / FRAME_RATE);
-
-    return () => clearInterval(interval);
-  }, [scrollDirection]);
-
-  useAnimatedReaction(
-    () => scrollY.value,
-    (y) => {
-      if (scrollDirection === "down") {
-        if (y >= totalSlideHeight) {
-          scrollY.value = 0;
-          scrollTo(scrollRef, 0, 0, true);
-        } else {
-          scrollTo(scrollRef, 0, y, false);
-        }
-      } else {
-        if (y <= 0) {
-          scrollY.value = totalSlideHeight;
-          scrollTo(scrollRef, 0, totalSlideHeight, true);
-        } else {
-          scrollTo(scrollRef, 0, y, false);
-        }
-      }
-    },
-  );
+  const animatedStyle = useAnimatedStyle(() => ({
+    transform: [
+      {
+        translateY:
+          scrollDirection === "down" ? -progress.value : progress.value,
+      },
+    ],
+  }));
 
   return (
-    <Animated.ScrollView
-      ref={scrollRef}
-      contentContainerStyle={styles.container}
-      scrollEnabled={false}
-      showsVerticalScrollIndicator={false}
-    >
-      {doubleItems.map((item, i) => (
-        <View
-          key={i}
-          style={[styles.itemContainer, { backgroundColor: item.color }]}
-        >
-          <Text style={{ fontSize: 40 }}>{item.Icon}</Text>
-        </View>
-      ))}
-    </Animated.ScrollView>
+    <View style={styles.wrapper}>
+      <Animated.View style={[styles.track, animatedStyle]}>
+        {items.map((item, i) => (
+          <View
+            key={i}
+            style={[styles.itemContainer, { backgroundColor: item.color }]}
+          >
+            <Text style={styles.iconText}>{item.Icon}</Text>
+          </View>
+        ))}
+      </Animated.View>
+    </View>
   );
 }
 
 const styles = StyleSheet.create({
-  container: {
-    // flex: 1,
+  wrapper: {
+    overflow: "hidden",
     paddingVertical: 20,
-    gap: 10,
+  },
+  track: {
+    alignItems: "center",
   },
   itemContainer: {
     width: 160,
@@ -118,7 +100,15 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     borderRadius: 20,
+    marginBottom: 10,
     marginHorizontal: 5,
-    boxShadow: "0px -2px 10px rgba(0,0,0,0.1)",
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.08,
+    shadowRadius: 10,
+    elevation: 3,
+  },
+  iconText: {
+    fontSize: 40,
   },
 });

@@ -13,69 +13,71 @@ import GoogleAuthButton from "@/components/auth/GoogleAuthButton";
 import InfiniteScrollSlide from "@/components/auth/InfiniteScrollSlide";
 import { Image } from "expo-image";
 import { LinearGradient } from "expo-linear-gradient";
-import { SafeAreaView } from "react-native-safe-area-context";
 function openWebPage() {
-  Linking.openURL("#");
+  Linking.openURL("https://wolt.com/privacy");
 }
 
 export default function Index() {
   return (
-    <SafeAreaView style={{ flex: 1 }}>
-      <View style={styles.container}>
-        <View style={styles.infinitScrollContainer}>
-          <View>
-            <InfiniteScrollSlide scrollDirection="down" iconSet="set1" />
-          </View>
-          <View>
-            <InfiniteScrollSlide scrollDirection="up" iconSet="set2" />
-          </View>
-          <View>
-            <InfiniteScrollSlide scrollDirection="down" iconSet="set3" />
-          </View>
-          <LinearGradient
-            colors={["transparent", "#fff"]}
-            style={styles.gradientStyle}
-          />
+    <View style={styles.container}>
+      <View style={styles.infinitScrollContainer}>
+        <View>
+          <InfiniteScrollSlide scrollDirection="down" iconSet="set1" />
         </View>
-        <View style={styles.contentContainer}>
-          <Image
-            contentFit="contain"
-            contentPosition={"center"}
-            source={require("@/assets/images/wolt-logo.png")}
-            style={styles.brandLogo}
-          />
-          <Animated.Text entering={FadeInDown} style={styles.title}>
-            Your Best Choice Forever
-          </Animated.Text>
+        <View>
+          <InfiniteScrollSlide scrollDirection="up" iconSet="set2" />
+        </View>
+        <View>
+          <InfiniteScrollSlide scrollDirection="down" iconSet="set3" />
+        </View>
+        <LinearGradient
+          colors={["transparent", "#fff"]}
+          style={styles.gradientStyle}
+        />
+      </View>
+      <View style={styles.contentContainer}>
+        <Image
+          contentFit="contain"
+          contentPosition={"center"}
+          source={require("@/assets/images/wolt-logo.png")}
+          style={styles.brandLogo}
+        />
+        <Animated.Text entering={FadeInDown} style={styles.title}>
+          Your Best Choice Forever
+        </Animated.Text>
 
-          <View style={styles.buttonContainer}>
-            <Animated.View entering={FadeInDown.delay(100)}>
-              <AppleAuthButton />
-            </Animated.View>
-            <Animated.View entering={FadeInDown.delay(200)}>
-              <GoogleAuthButton />
-            </Animated.View>
-            <Animated.View entering={FadeInDown.delay(300)}>
-              <TouchableOpacity activeOpacity={0.8} style={styles.textButton}>
-                <Text style={styles.textButtonContent}>Other Options</Text>
-              </TouchableOpacity>
-            </Animated.View>
-          </View>
-          <Animated.View
-            style={styles.privacyContainer}
-            entering={FadeInDown.delay(400)}
-          >
-            <Text style={styles.privacyText}>Please Visit</Text>
-            <Text style={styles.privacyLink} onPress={openWebPage}>
-              Euria Privacy Statement
-            </Text>
-            <Text style={styles.privacyText}>
-              to learn about your personal data processing at Euria.
-            </Text>
+        <View style={styles.buttonContainer}>
+          <Animated.View entering={FadeInDown.delay(100)}>
+            <AppleAuthButton />
+          </Animated.View>
+          <Animated.View entering={FadeInDown.delay(200)}>
+            <GoogleAuthButton />
+          </Animated.View>
+          <Animated.View entering={FadeInDown.delay(300)}>
+            <TouchableOpacity activeOpacity={0.8} style={styles.textButton}>
+              <Text style={styles.textButtonContent}>Other Options</Text>
+            </TouchableOpacity>
           </Animated.View>
         </View>
+        <Animated.View
+          style={styles.privacyContainer}
+          entering={FadeInDown.delay(400)}
+        >
+          <Text style={styles.privacyText}>Please Visit</Text>
+          <Text
+            style={styles.privacyLink}
+            onPress={openWebPage}
+            accessibilityRole="link"
+            accessibilityHint="Open Privacy on browser"
+          >
+            Euria Privacy Statement
+          </Text>
+          <Text style={styles.privacyText}>
+            to learn about your personal data processing at Euria.
+          </Text>
+        </Animated.View>
       </View>
-    </SafeAreaView>
+    </View>
   );
 }
 
@@ -91,7 +93,7 @@ const styles = StyleSheet.create({
     right: 0,
   },
   infinitScrollContainer: {
-    flex: 0.8,
+    flex: 0.65,
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "center",
@@ -103,12 +105,10 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: "center",
     paddingHorizontal: 30,
-    paddingVertical: 20,
   },
   brandLogo: {
     height: 48,
     width: "100%",
-    // contentFit: "contain",
     marginBottom: 20,
   },
   title: {
