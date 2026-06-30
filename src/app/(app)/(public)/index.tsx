@@ -13,11 +13,13 @@ import GoogleAuthButton from "@/components/auth/GoogleAuthButton";
 import InfiniteScrollSlide from "@/components/auth/InfiniteScrollSlide";
 import { Image } from "expo-image";
 import { LinearGradient } from "expo-linear-gradient";
+import { Link } from "expo-router";
+import BottomSheetUI from "@/components/BottomSheetModal";
 function openWebPage() {
   Linking.openURL("https://wolt.com/privacy");
 }
 
-export default function Index() {
+ function Index() {
   return (
     <View style={styles.container}>
       <View style={styles.infinitScrollContainer}>
@@ -39,7 +41,7 @@ export default function Index() {
         <Image
           contentFit="contain"
           contentPosition={"center"}
-          source={require("@/assets/images/wolt-logo.png")}
+          source={require("@/assets/images/euria-logo.png")}
           style={styles.brandLogo}
         />
         <Animated.Text entering={FadeInDown} style={styles.title}>
@@ -54,9 +56,12 @@ export default function Index() {
             <GoogleAuthButton />
           </Animated.View>
           <Animated.View entering={FadeInDown.delay(300)}>
-            <TouchableOpacity activeOpacity={0.8} style={styles.textButton}>
-              <Text style={styles.textButtonContent}>Other Options</Text>
-            </TouchableOpacity>
+            <BottomSheetUI/>
+            {/* <Link href={"/(app)/(public)/other-options"} asChild>
+              <TouchableOpacity activeOpacity={0.8} style={styles.textButton}>
+                <Text style={styles.textButtonContent}>Other Options</Text>
+              </TouchableOpacity>
+            </Link> */}
           </Animated.View>
         </View>
         <Animated.View
@@ -80,7 +85,7 @@ export default function Index() {
     </View>
   );
 }
-
+export default Index;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -107,9 +112,9 @@ const styles = StyleSheet.create({
     paddingHorizontal: 30,
   },
   brandLogo: {
-    height: 48,
+    flex:1,
     width: "100%",
-    marginBottom: 20,
+    marginBottom: 16,
   },
   title: {
     fontSize: 32,
