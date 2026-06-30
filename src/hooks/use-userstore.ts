@@ -1,4 +1,4 @@
-import zustandStorage from '@/utils/zustandStorage';
+import { setItem, getItem, deleteItemAsync } from 'expo-secure-store';
 import { create } from 'zustand';
 import { createJSONStorage, persist } from 'zustand/middleware';
 
@@ -19,7 +19,11 @@ const useUserStore = create<UserStore>()(
     }),
     {
       name: 'user',
-      storage: createJSONStorage(() => zustandStorage),
+      storage: createJSONStorage(() => ({
+              setItem,
+              getItem,
+              removeItem: deleteItemAsync,
+            })),
     }
   )
 );
