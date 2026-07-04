@@ -1,7 +1,7 @@
 import useUserStore from "@/hooks/use-userstore";
 import { Button, StyleSheet, Text, View } from "react-native";
 
-export default function index() {
+export default function Discovery() {
   const { setIsGuest } = useUserStore();
   return (
     <View style={styles.container}>

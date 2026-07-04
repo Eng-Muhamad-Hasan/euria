@@ -1,62 +1,77 @@
 import { Colors, Fonts } from "@/constants/theme";
-import useUserStore from "@/hooks/use-userstore";
+import useLocationModalStore from "@/hooks/use-locationmodal";
 import {
   BottomSheetModal,
   BottomSheetView,
 } from "@expo/ui/community/bottom-sheet";
 import Ionicons from "@react-native-vector-icons/ionicons";
-import { useRef } from "react";
+import { useEffect, useRef } from "react";
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
-import Animated, { FadeInDown } from "react-native-reanimated";
-import AppleAuthButton from "./auth/AppleAuthButton";
-import GoogleAuthButton from "./auth/GoogleAuthButton";
-export default function BottomSheetUI() {
-  const { setIsGuest } = useUserStore();
+interface BottomSheetUIProps {
+  children: React.ReactNode;
+  hasButton?: boolean;
+  buttonText?: string;
+  buttonTextStyle?: Object;
+  buttonStyle?: Object;
+  visible?: boolean;
+  onDismiss?: () => void;
+}
+export default function BottomSheetUI({
+  children,
+  buttonText,
+  buttonTextStyle,
+  buttonStyle,
+  hasButton = true,
+  visible,
+  onDismiss,
+}: BottomSheetUIProps) {
   const modalRef = useRef<BottomSheetModal>(null);
-  const guestHandler = () => {
-    setIsGuest(true);
-  };
+  const { close } = useLocationModalStore();
+  useEffect(() => {
+    if (visible === undefined) {
+      return;
+    }
+
+    if (visible) {
+      modalRef.current?.present();
+    } else {
+      modalRef.current?.dismiss();
+    }
+  }, [visible]);
+
   return (
     <View>
-      <TouchableOpacity
-        activeOpacity={0.8}
-        onPress={() => modalRef.current?.present()}
-        style={styles.textButton}
-      >
-        <Text style={styles.textButtonContent}>Other Options</Text>
-      </TouchableOpacity>
+      {hasButton && (
+        <TouchableOpacity
+          activeOpacity={0.8}
+          onPress={() => modalRef.current?.present()}
+          style={buttonStyle}
+        >
+          <Text style={buttonTextStyle}>{buttonText}</Text>
+        </TouchableOpacity>
+      )}
       <BottomSheetModal
         ref={modalRef}
-        backgroundStyle={{ backgroundColor: Colors.primaryLight }}
+        backgroundStyle={{ backgroundColor: Colors.pureWhite }}
         snapPoints={[0.6, 0.6]}
         enablePanDownToClose
         enableOverDrag={false}
         overDragResistanceFactor={0}
+        onDismiss={close}
+        onClose={close}
       >
         <BottomSheetView style={styles.contentContainer}>
           <TouchableOpacity
             activeOpacity={0.8}
             style={styles.closeButton}
-            onPress={() => modalRef.current?.dismiss()}
+            onPress={() => {
+              modalRef.current?.dismiss();
+              onDismiss?.();
+            }}
           >
             <Ionicons name="close" size={18} color={Colors.ultraDark} />
           </TouchableOpacity>
-          <Animated.View entering={FadeInDown.delay(100)}>
-            <Text style={styles.titleStyle}>Login or Create a new Account</Text>
-          </Animated.View>
-          <View style={styles.buttonContainer}>
-            <Animated.View entering={FadeInDown.delay(200)}>
-              <AppleAuthButton />
-            </Animated.View>
-            <Animated.View entering={FadeInDown.delay(300)}>
-              <GoogleAuthButton />
-            </Animated.View>
-            <Animated.View entering={FadeInDown.delay(400)}>
-              <TouchableOpacity activeOpacity={0.8} onPress={guestHandler}>
-                <Text style={styles.guestButton}>Continue as guest</Text>
-              </TouchableOpacity>
-            </Animated.View>
-          </View>
+          {children}
         </BottomSheetView>
       </BottomSheetModal>
     </View>
@@ -64,7 +79,7 @@ export default function BottomSheetUI() {
 }
 const styles = StyleSheet.create({
   textButton: {
-    backgroundColor: Colors.lightGray,
+    backgroundColor: Colors.pureWhite,
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "center",
@@ -86,7 +101,7 @@ const styles = StyleSheet.create({
     marginVertical: 10,
   },
   contentContainer: {
-    backgroundColor: Colors.primaryLight,
+    backgroundColor: Colors.pureWhite,
     padding: 16,
     alignItems: "center",
   },
