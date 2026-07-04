@@ -1,25 +1,18 @@
 import { Colors, Fonts } from "@/constants/theme";
-import {
-  Linking,
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-  View,
-} from "react-native";
+import { Linking, StyleSheet, Text, View } from "react-native";
 import Animated, { FadeInDown } from "react-native-reanimated";
 
 import AppleAuthButton from "@/components/auth/AppleAuthButton";
 import GoogleAuthButton from "@/components/auth/GoogleAuthButton";
 import InfiniteScrollSlide from "@/components/auth/InfiniteScrollSlide";
+import OtherOptionsModal from "@/components/modals/OtherOptionsModal";
 import { Image } from "expo-image";
 import { LinearGradient } from "expo-linear-gradient";
-import { Link } from "expo-router";
-import BottomSheetUI from "@/components/BottomSheetModal";
 function openWebPage() {
   Linking.openURL("https://wolt.com/privacy");
 }
 
- function Index() {
+function Index() {
   return (
     <View style={styles.container}>
       <View style={styles.infinitScrollContainer}>
@@ -56,12 +49,8 @@ function openWebPage() {
             <GoogleAuthButton />
           </Animated.View>
           <Animated.View entering={FadeInDown.delay(300)}>
-            <BottomSheetUI/>
-            {/* <Link href={"/(app)/(public)/other-options"} asChild>
-              <TouchableOpacity activeOpacity={0.8} style={styles.textButton}>
-                <Text style={styles.textButtonContent}>Other Options</Text>
-              </TouchableOpacity>
-            </Link> */}
+            <OtherOptionsModal />
+          
           </Animated.View>
         </View>
         <Animated.View
@@ -112,7 +101,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 30,
   },
   brandLogo: {
-    flex:1,
+    flex: 1,
     width: "100%",
     marginBottom: 16,
   },
@@ -128,7 +117,7 @@ const styles = StyleSheet.create({
     width: "100%",
   },
   textButton: {
-    backgroundColor: Colors.lightGray,
+    // backgroundColor: Colors.lightGray,
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "center",
