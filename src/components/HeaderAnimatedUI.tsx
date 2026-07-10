@@ -54,8 +54,14 @@ export default function HeaderAnimatedUI({
       [-10, 0],
       Extrapolation.CLAMP,
     );
+    const zIndex = interpolate(
+      scrollOffset.value,
+      [0, SCROLL_THRESHOLD * 0.3],
+      [0, 1],
+      Extrapolation.CLAMP,
+    );
 
-    return { opacity, transform: [{ translateY }] };
+    return { opacity, transform: [{ translateY }] ,zIndex};
   });
   const shadowAnimation = useAnimatedStyle(() => {
     const opacity = interpolate(
@@ -67,7 +73,7 @@ export default function HeaderAnimatedUI({
     return { shadowOpacity: opacity * 0.1, elevation: opacity * 5 };
   });
   return (
-    <>
+     <>
       <Animated.View
         style={[
           styles.headerContainer,
@@ -93,11 +99,11 @@ export default function HeaderAnimatedUI({
             <TouchableOpacity activeOpacity={0.8} style={styles.iconButton}>
               <Ionicons name="filter" size={20} />
             </TouchableOpacity>
-            <Link href={"/(app)/(auth)/(modal)/map"} asChild>
+            {/* <Link href={"/(app)/(auth)/(modal)/map"} asChild> */}
               <TouchableOpacity activeOpacity={0.8} style={styles.iconButton}>
                 <Ionicons name="map-outline" size={20} />
               </TouchableOpacity>
-            </Link>
+            {/* </Link> */}
           </View>
         </Animated.View>
         {/* Header 2 */}
@@ -121,14 +127,14 @@ export default function HeaderAnimatedUI({
           </View>
         </Animated.View>
       </Animated.View>
-      <LocationModal />
-    </>
+       <LocationModal /> 
+     </> 
   );
 }
 
 const styles = StyleSheet.create({
   headerContainer: {
-    flex: 1,
+    // flex: 1,
     position: "absolute",
     top: 0,
     left: 0,
@@ -138,6 +144,7 @@ const styles = StyleSheet.create({
     borderCurve: "circular",
     borderBottomLeftRadius: "15%",
     borderBottomRightRadius: "15%",
+    shadowColor:Colors.dark,
     shadowOffset: { width: 0, height: 2 },
     shadowRadius: 4,
   },
@@ -149,9 +156,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between",
-    // borderBottomLeftRadius: 10,
-    // borderBottomRightRadius: 10,
-    // overflow: "hidden",
+    zIndex:1
   },
   locationText: {
     fontSize: 14,

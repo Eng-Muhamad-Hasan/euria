@@ -12,15 +12,17 @@ export default function TabsLayout() {
         fontSize: 10,
         color: Colors.ultraDark,
         fontFamily: Fonts.brandBlack,
+
       }}
       iconColor={{
         default: Colors.dark,
         selected: Colors.primaryLight,
       }}
       backgroundColor={Colors.lightGray}
+
     >
         
-      <NativeTabs.Trigger name="restaurants">
+      <NativeTabs.Trigger  name="restaurants">
         <NativeTabs.Trigger.Label>Restaurants</NativeTabs.Trigger.Label>
         <NativeTabs.Trigger.Icon md={"fastfood"} />
       </NativeTabs.Trigger>
