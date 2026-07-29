@@ -1,3 +1,4 @@
+import Ionicons from "@react-native-vector-icons/ionicons";
 import { useEffect } from "react";
 import { StyleSheet, Text, View } from "react-native";
 import Animated, {
@@ -13,25 +14,28 @@ const ITEM_HEIGHT = 160;
 const SCROLL_SPEED = 20; // pixels per second
 const iconDataSets = {
   set1: [
-    { Icon: "🍕", color: "#B2D5E5" },
-    { Icon: "🍔", color: "#B2D5E5" },
-    { Icon: "🍟", color: "#B2D5E5" },
-    { Icon: "🍖", color: "#B2D5E5" },
-    { Icon: "🌭", color: "#B2D5E5" },
+    { Icon: 'fast-food', color: "#B2D5E5" },
+    { Icon: 'fast-food' ,color: "#B2D5E5" },
+    { Icon: 'fast-food' ,color: "#B2D5E5" },
+    { Icon: 'fast-food', color: "#B2D5E5" },
+    { Icon: 'fast-food', color: "#B2D5E5" },
+    
   ],
   set2: [
-    { Icon: "🍿", color: "#FF7F7F" },
-    { Icon: "🥐", color: "#FF7F7F" },
-    { Icon: "🥨", color: "#FF7F7F" },
-    { Icon: "🌮", color: "#FF7F7F" },
-    { Icon: "🍪", color: "#FF7F7F" },
+    { Icon: 'restaurant' ,color: "#B2D5E5" },
+    { Icon: 'restaurant', color: "#B2D5E5" },
+    { Icon: 'restaurant', color: "#B2D5E5" },
+    { Icon: 'restaurant', color: "#B2D5E5" },
+    { Icon: 'restaurant', color: "#B2D5E5" },
+    
   ],
   set3: [
-    { Icon: "🥝", color: "#C6FF34" },
-    { Icon: "🍉", color: "#C6FF34" },
-    { Icon: "🫐", color: "#C6FF34" },
-    { Icon: "🍄", color: "#C6FF34" },
-    { Icon: "🍇", color: "#C6FF34" },
+  { Icon: 'storefront' ,color: "#B2D5E5" },
+  { Icon: 'storefront', color: "#B2D5E5" },
+  { Icon: 'storefront', color: "#B2D5E5" },
+  { Icon: 'storefront', color: "#B2D5E5" },
+  { Icon: 'storefront', color: "#B2D5E5" },
+
   ],
 };
 
@@ -74,11 +78,16 @@ export default function InfiniteScrollSlide({
     <View style={styles.wrapper}>
       <Animated.View style={[styles.track, animatedStyle]}>
         {items.map((item, i) => (
-          <View
-            key={i}
-            style={[styles.itemContainer, { backgroundColor: item.color }]}
-          >
-            <Text style={styles.iconText}>{item.Icon}</Text>
+          <View key={i} style={[styles.itemContainer,{backgroundColor:'#0f0f0a'}]}>
+            {/* <Text style={styles.iconText}>{item.Icon}</Text> */}
+            {/* <Image
+              key={i}
+              style={{ height: 160, width: 160 }}
+              source={item.Icon}
+              contentPosition={"center"}
+              contentFit="cover"
+            /> */}
+            <Ionicons name={item.Icon as any} size={55} color='#cacaca' />
           </View>
         ))}
       </Animated.View>
@@ -99,7 +108,7 @@ const styles = StyleSheet.create({
     height: ITEM_HEIGHT,
     alignItems: "center",
     justifyContent: "center",
-    borderRadius: 20,
+    borderRadius: 16,
     marginBottom: 10,
     marginHorizontal: 5,
     shadowColor: "#000",
@@ -107,6 +116,7 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.08,
     shadowRadius: 10,
     elevation: 3,
+    overflow:'hidden'
   },
   iconText: {
     fontSize: 40,

@@ -1,4 +1,6 @@
 import { Stack } from "expo-router";
+// import {Stack } from '@/utils/stack'
+// import Transition from 'react-native-screen-transitions'
 export default function AuthLayout() {
   return (
     <Stack>
@@ -15,6 +17,8 @@ export default function AuthLayout() {
         name="(modal)/(restaurant-details)/[id]"
         options={{
           headerShown: false,
+          
+          animation:'flip'
           // ...Transition.Presets.DraggableCard()
         }}
       />
@@ -26,8 +30,11 @@ export default function AuthLayout() {
       />
       <Stack.Screen
         name="order"
+        
         options={{
           headerShown: false,
+        // enableTransitions:true,
+        // ...Transition.Presets.ElasticCard()
         }}
       />
     </Stack>

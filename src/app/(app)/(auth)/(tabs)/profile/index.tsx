@@ -1,1 +1,1 @@
-export { default } from "@/screens/restaurants-screen";
+export { default } from "@/screens/profile-screen";

@@ -1,6 +1,8 @@
 import type { Dish } from '@/data/restaurant_menu';
 import type { Restaurant } from '@/data/restaurants';
-import zustandStorage from '@/utils/zustandStorage';
+// import zustandStorage from '@/utils/zustandStorage';
+import { setItem, getItem, deleteItemAsync } from "expo-secure-store";
+
 import { create } from 'zustand';
 import { createJSONStorage, persist } from 'zustand/middleware';
 
@@ -120,7 +122,11 @@ export const useCartStore = create<CartStore>()(
     }),
     {
       name: 'cart',
-      storage: createJSONStorage(() => zustandStorage),
+      storage:createJSONStorage(() => ({
+                    setItem,
+                    getItem,
+                    removeItem: deleteItemAsync,
+                  })),
     }
   )
 );

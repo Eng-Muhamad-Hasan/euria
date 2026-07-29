@@ -1,10 +1,4 @@
-import {
-  Nunito_400Regular,
-  Nunito_500Medium,
-  Nunito_600SemiBold,
-  Nunito_700Bold,
-  Nunito_900Black,
-} from "@expo-google-fonts/nunito";
+import { setupGlobalFont } from "@/lib/setup-global-font";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { useFonts } from "expo-font";
 import { Slot } from "expo-router";
@@ -25,16 +19,13 @@ const queryClient = new QueryClient({
 SplashScreen.preventAutoHideAsync();
 
 export default function RootLayout() {
-  let [fontsLoaded] = useFonts({
-    Nunito_400Regular,
-    Nunito_500Medium,
-    Nunito_600SemiBold,
-    Nunito_700Bold,
-    Nunito_900Black,
+  const [fontsLoaded] = useFonts({
+    TenorSans: require("@/assets/fonts/TenorSans-Regular.ttf"),
   });
 
   useEffect(() => {
     if (fontsLoaded) {
+      setupGlobalFont();
       SplashScreen.hideAsync();
     }
   }, [fontsLoaded]);

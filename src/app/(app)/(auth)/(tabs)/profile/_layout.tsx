@@ -1,20 +1,22 @@
-
+import { Fonts } from "@/constants/theme";
 import { Stack } from "expo-router";
-// import Transition from "react-native-screen-transitions";
-const ProfileLayout = () => {
+
+const Page = () => {
   return (
     <Stack screenOptions={{ contentStyle: { backgroundColor: "#fff" } }}>
       <Stack.Screen
         name="index"
         options={{
-          title: "Profile",
-          headerLargeTitleEnabled: true,
-          headerTransparent: true,
+          headerLargeTitle: true,
+          headerTitle: "Profile",
+          // headerTransparent: true,
+          headerLargeTitleStyle: {
+            fontFamily: Fonts.brandBlack,
+            color: "#000",
+          },
         }}
       />
     </Stack>
-    
   );
 };
-
-export default ProfileLayout;
+export default Page;

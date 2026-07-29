@@ -3,15 +3,16 @@
   "main": "expo-router/entry",
   "version": "1.0.0",
   "dependencies": {
-    "@expo-google-fonts/nunito": "^0.4.2",
     "@expo/material-symbols": "^0.1.1",
     "@expo/ui": "~57.0.2",
     "@react-native-vector-icons/ionicons": "^13.1.2",
     "@react-navigation/elements": "^2.9.29",
     "@react-navigation/native": "^7.3.7",
     "@react-navigation/native-stack": "^7.17.9",
+    "@shopify/react-native-skia": "^2.6.9",
     "@tanstack/react-query": "^5.101.1",
     "expo": "^57.0.0",
+    "expo-blur": "^57.0.0",
     "expo-constants": "~57.0.2",
     "expo-dev-client": "~57.0.4",
     "expo-device": "~57.0.0",
@@ -44,10 +45,12 @@
     "zustand": "^5.0.14"
   },
   "devDependencies": {
+    "@react-native-community/cli": "latest",
     "@types/react": "~19.2.2",
+    "eslint": "^9.0.0",
+    "eslint-config-expo": "~57.0.0",
     "expo-mcp": "~0.2.1",
-    "typescript": "~6.0.3",
-    "@react-native-community/cli": "latest"
+    "typescript": "~6.0.3"
   },
   "scripts": {
     "start": "expo start",

@@ -21,9 +21,9 @@ export const Colors = {
 };
 
 export const Fonts = {
-  brand: "Nunito",
-  brandMedium: "Nunito_500Medium",
-  brandSemiBold: "Nunito_600SemiBold",
-  brandBold: "Nunito_700Bold",
-  brandBlack: "Nunito_900Black",
+  brand: "TenorSans",
+  brandMedium: "TenorSans",
+  brandSemiBold: "TenorSans",
+  brandBold: "TenorSans",
+  brandBlack: "TenorSans",
 };
